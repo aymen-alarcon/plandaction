@@ -1,12 +1,11 @@
-let count = 0;
-
-document.getElementById("submitBtn").addEventListener("click", (event)=>{
+document.forms["submitNewGamer"].addEventListener("submit", (event)=>{
     event.preventDefault()
-    count++
-    let form = document.forms["submitNewGamer"]
-    
+    let form = event.target
+
+    let dataList = getItemsFromLocalStorage("gamers")
+
     let gamer = {
-        id : count,
+        id : dataList.length,
         firstName : form.FirstName.value,
         LastName : form.LastName.value,
         Game : form.Game.value,
@@ -71,6 +70,7 @@ function deletePlayer(userId) {
 
     gamersList.splice(chosenPlayer, 1)
     localStorage.setItem("gamers", JSON.stringify(gamersList))
+    displayNewGamers()
 }
 
 function updatePlayer(userId) {
