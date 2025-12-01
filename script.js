@@ -1,4 +1,4 @@
-document.forms["submitNewGamer"].addEventListener("submit", (event)=>{
+document.getElementById("submitBtn").addEventListener("click", (event)=>{
     event.preventDefault()
     let form = event.target
 
@@ -82,4 +82,19 @@ function updatePlayer(userId) {
     form.LastName.value = chosenPlayer.LastName
     form.Game.value = chosenPlayer.Game
     form.Phone.value = chosenPlayer.Phone
+
+    document.querySelector(".btn-outline-dark").addEventListener("click", ()=>{
+        chosenPlayer.firstName = form.FirstName.value
+        chosenPlayer.LastName = form.LastName.value
+        chosenPlayer.Game = form.Game.value
+        chosenPlayer.Phone = form.Phone.value
+
+        for (let index = 0; index < gamersList.length; index++) {
+            if (gamersList[index].id == userId) {
+                gamersList[index] = chosenPlayer
+            }
+        }
+
+        localStorage.setItem("gamers", JSON.stringify(gamersList))
+    })
 }
