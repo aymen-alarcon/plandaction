@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 function displayNewGamers() {
     let gamersList = getItemsFromLocalStorage("gamers")
-    
+    document.getElementById("gamerListContainer").innerHTML = ""
     gamersList.forEach(gamer => {        
         document.getElementById("gamerListContainer").innerHTML += `
             <div class="card p-4">
@@ -59,12 +59,27 @@ function displayNewGamers() {
 document.addEventListener("click", (event) => {
     if (event.target.classList.contains("btn-outline-danger")) {
         deletePlayer(event.target.getAttribute("data-name"));
+    }else if (event.target.classList.contains("btn-outline-success")) {
+        updatePlayer(event.target.getAttribute("data-name"))
     }
 });
 
 function deletePlayer(userId) {
-    let gamerId = userId - 1
     let gamersList = getItemsFromLocalStorage("gamers")
-    gamersList.splice(gamerId, 1)
-    addItemsToLocalStorage("gamers", gamersList)
+
+    let chosenPlayer = gamersList.findIndex(gamer => gamer.id == userId)
+
+    gamersList.splice(chosenPlayer, 1)
+    localStorage.setItem("gamers", JSON.stringify(gamersList))
+}
+
+function updatePlayer(userId) {
+    let gamersList = getItemsFromLocalStorage("gamers")
+    let chosenPlayer = gamersList.find(player => player.id == userId)
+    let form = document.forms["submitNewGamer"]
+
+    form.FirstName.value = chosenPlayer.firstName
+    form.LastName.value = chosenPlayer.LastName
+    form.Game.value = chosenPlayer.Game
+    form.Phone.value = chosenPlayer.Phone
 }
