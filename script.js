@@ -38,13 +38,18 @@ function displayNewGamers() {
     
     gamersList.forEach(gamer => {        
         document.getElementById("gamerListContainer").innerHTML += `
-            <div class="card">
+            <div class="card p-4">
                 <div>${gamer.firstName}</div>
                 <div>${gamer.LastName}</div>
                 <div>${gamer.Game}</div>
                 <div>${gamer.Phone}</div>
-                <div class="btn btn-outline-danger" data-name="${gamer.id}">
-                    Delete
+                <div class="d-flex gap-3 w-100 p-2">
+                    <div class="btn btn-outline-danger w-100" data-name="${gamer.id}">
+                        Delete
+                    </div>
+                    <div class="btn btn-outline-success w-100" data-name="${gamer.id}">
+                        Update
+                    </div>
                 </div>
             </div>
         `
