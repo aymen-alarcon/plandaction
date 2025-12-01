@@ -13,7 +13,8 @@ document.getElementById("submitBtn").addEventListener("click", (event)=>{
     }
     
     addItemsToLocalStorage("gamers", gamer)
-    displayNewGamers()
+    let gamerList = getItemsFromLocalStorage("gamers")
+    displayNewGamers(gamerList)
     form.reset()
     form.FirstName.focus()
 })
@@ -29,13 +30,13 @@ function addItemsToLocalStorage(key, list) {
 }
 
 document.addEventListener("DOMContentLoaded", ()=>{
-    displayNewGamers()
+    let gamerList = getItemsFromLocalStorage("gamers")
+    displayNewGamers(gamerList)
 })
 
-function displayNewGamers() {
-    let gamersList = getItemsFromLocalStorage("gamers")
+function displayNewGamers(arr) {
     document.querySelector(".card").innerHTML = ""
-    gamersList.forEach(gamer => {        
+    arr.forEach(gamer => {        
         document.querySelector(".card").innerHTML += `
                 <div>${gamer.firstName}</div>
                 <div>${gamer.LastName}</div>
@@ -68,7 +69,8 @@ function deletePlayer(userId) {
 
     gamersList.splice(chosenPlayer, 1)
     localStorage.setItem("gamers", JSON.stringify(gamersList))
-    displayNewGamers()
+        displayNewGamers(gamerList)
+    displayNewGamers(gamerList)
 }
 
 function updatePlayer(userId) {
@@ -100,22 +102,12 @@ function updatePlayer(userId) {
 
 document.getElementById("selectSort").addEventListener("change", ()=>{
     let dataList = getItemsFromLocalStorage("gamers")
-    let sortedArray = dataList.sort((a, b) => a.Game.localeCompare(b.Game))
-    document.querySelector(".card").innerHTML = ""
-    sortedArray.forEach(gamer => {        
-        document.querySelector(".card").innerHTML += `
-            <div>${gamer.firstName}</div>
-            <div>${gamer.LastName}</div>
-            <div>${gamer.Game}</div>
-            <div>${gamer.Phone}</div>
-            <div class="d-flex gap-3 w-100 p-2">
-                <div class="btn btn-outline-danger w-100" data-name="${gamer.id}">
-                    Delete
-                </div>
-                <div class="btn btn-outline-success w-100" data-name="${gamer.id}">
-                    Update
-                </div>
-            </div>
-        `
-    });
+    let sortedArray = dataList.sort((a, b) => a.game.localeCompare(b.game))
+    displayNewGamers(sortedArray)
+})
+
+document.getElementById("searchPanel").addEventListener("input", ()=>{
+    let dataList = getItemsFromLocalStorage("gamers")
+    let chosenPlayers = dataList.filter(contact => contact.firstName.includes(document.getElementById("searchPanel").value))
+    displayNewGamers(chosenPlayers)
 })
