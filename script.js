@@ -1,6 +1,6 @@
 document.getElementById("submitBtn").addEventListener("click", (event)=>{
     event.preventDefault()
-    let form = event.target
+    let form = document.forms["submitNewGamer"]
 
     let dataList = getItemsFromLocalStorage("gamers")
 
@@ -34,10 +34,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 function displayNewGamers() {
     let gamersList = getItemsFromLocalStorage("gamers")
-    document.getElementById("gamerListContainer").innerHTML = ""
+    document.querySelector(".card").innerHTML = ""
     gamersList.forEach(gamer => {        
-        document.getElementById("gamerListContainer").innerHTML += `
-            <div class="card p-4">
+        document.querySelector(".card").innerHTML += `
                 <div>${gamer.firstName}</div>
                 <div>${gamer.LastName}</div>
                 <div>${gamer.Game}</div>
@@ -50,7 +49,6 @@ function displayNewGamers() {
                         Update
                     </div>
                 </div>
-            </div>
         `
     });
 }
@@ -98,3 +96,26 @@ function updatePlayer(userId) {
         localStorage.setItem("gamers", JSON.stringify(gamersList))
     })
 }
+
+
+document.getElementById("selectSort").addEventListener("change", ()=>{
+    let dataList = getItemsFromLocalStorage("gamers")
+    let sortedArray = dataList.sort((a, b) => a.Game.localeCompare(b.Game))
+    document.querySelector(".card").innerHTML = ""
+    sortedArray.forEach(gamer => {        
+        document.querySelector(".card").innerHTML += `
+            <div>${gamer.firstName}</div>
+            <div>${gamer.LastName}</div>
+            <div>${gamer.Game}</div>
+            <div>${gamer.Phone}</div>
+            <div class="d-flex gap-3 w-100 p-2">
+                <div class="btn btn-outline-danger w-100" data-name="${gamer.id}">
+                    Delete
+                </div>
+                <div class="btn btn-outline-success w-100" data-name="${gamer.id}">
+                    Update
+                </div>
+            </div>
+        `
+    });
+})
