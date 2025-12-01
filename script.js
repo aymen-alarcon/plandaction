@@ -10,6 +10,7 @@ document.getElementById("submitBtn").addEventListener("click", (event)=>{
     }
     
     addItemsFromLocalStorage("gamers", gamer)
+    displayNewGamers()
     form.reset()
     form.FirstName.focus()
 })
@@ -23,7 +24,20 @@ function addItemsFromLocalStorage(key, list) {
     dataList.push(list)
     localStorage.setItem(key, JSON.stringify(dataList))
 }
-
-function displayNewGamers(params) {
+document.addEventListener("DOMContentLoaded", ()=>{
+    displayNewGamers()
+})
+function displayNewGamers() {
+    let gamersList = getItemsFromLocalStorage("gamers")
     
+    gamersList.forEach(gamer => {        
+        document.getElementById("gamerListContainer").innerHTML += `
+            <div class="card">
+                <div>${gamer.firstName}</div>
+                <div>${gamer.LastName}</div>
+                <div>${gamer.Game}</div>
+                <div>${gamer.Phone}</div>
+            </div>
+        `
+    });
 }
