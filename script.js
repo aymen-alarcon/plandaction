@@ -1,5 +1,3 @@
-let gamersList = []
-
 document.getElementById("submitBtn").addEventListener("click", (event)=>{
     event.preventDefault()
     let form = document.forms["submitNewGamer"]
@@ -11,14 +9,21 @@ document.getElementById("submitBtn").addEventListener("click", (event)=>{
         Phone : form.Phone.value
     }
     
-    gamersList.push(gamer)
-    addItemsFromLocalStorage("Gamers", gamersList)
+    addItemsFromLocalStorage("gamers", gamer)
+    form.reset()
+    form.FirstName.focus()
 })
 
 function getItemsFromLocalStorage(key) {
-    localStorage.getItem(JSON.parse(key))
+    return JSON.parse(localStorage.getItem(key)) || []
 }
 
 function addItemsFromLocalStorage(key, list) {
-    localStorage.setItem(key, JSON.stringify(list))
+    let dataList = getItemsFromLocalStorage("gamers")
+    dataList.push(list)
+    localStorage.setItem(key, JSON.stringify(dataList))
+}
+
+function displayNewGamers(params) {
+    
 }
