@@ -99,7 +99,6 @@ function updatePlayer(userId) {
     })
 }
 
-
 document.getElementById("selectSort").addEventListener("change", ()=>{
     let dataList = getItemsFromLocalStorage("gamers")
     let sortedArray = dataList.sort((a, b) => a.game.localeCompare(b.game))
